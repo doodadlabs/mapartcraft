@@ -290,6 +290,7 @@ class MapPreview extends Component {
         onGetMapMaterials({
           pixelsData: e.data.body.pixels.data,
           maps: e.data.body.maps,
+          chunks: e.data.body.chunks,
           currentSelectedBlocks: e.data.body.currentSelectedBlocks,
         });
       } else if (e.data.head === "PROGRESS_REPORT") {

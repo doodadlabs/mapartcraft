@@ -7,7 +7,12 @@ import BlockImage from "./blockImage";
 import "./materials.css";
 
 class Materials extends Component {
-  state = { onlyMaxPerSplit: false };
+  state = { onlyMaxPerSplit: false,
+            chunksToDisplay: [],
+            rowInput: 0,
+            columnInput: 0,
+            allMaterials: true,
+          };
 
   onOnlyMaxPerSplitChange = () => {
     this.setState((currentState) => ({
@@ -16,46 +21,129 @@ class Materials extends Component {
     }));
   };
 
-  getMaterialsCount_nonZeroMaterialsItems() {
-    const { coloursJSON, currentMaterialsData } = this.props;
-    const { onlyMaxPerSplit } = this.state;
-    const materialsCount = {};
-    for (const colourSetId of Object.keys(coloursJSON)) {
-      materialsCount[colourSetId] = 0;
-    }
-    for (const row of currentMaterialsData.maps) {
-      for (const map of row) {
-        for (const [colourSetId, materialCount] of Object.entries(map.materials)) {
-          if (onlyMaxPerSplit) {
-            materialsCount[colourSetId] = Math.max(materialsCount[colourSetId], materialCount);
-          } else {
-            materialsCount[colourSetId] += materialCount;
-          }
-        }
-      }
-    }
-    return Object.entries(materialsCount)
-      .filter(([_, value]) => value !== 0)
-      .sort((first, second) => {
-        return second[1] - first[1];
-      });
+  onDisplayAllChange = () => {
+    this.setState((currentState) => ({
+      allMaterials: !currentState.allMaterials,
+    }));
+  };
+
+  onResetList = () => {
+    this.setState((currentState) => ({
+      chunksToDisplay: [],
+    }));
   }
 
-  getMaterialsCount_supportBlock() {
+  onAddChunkToList = () => {
+    const { rowInput, columnInput, chunksToDisplay } = this.state;
+    let chunkCoords = { row: rowInput, column: columnInput };
+    let updatedChunksToDisplay = chunksToDisplay;
+    if(!this.chunkExists(chunkCoords)) {
+      chunksToDisplay.push(chunkCoords);
+    }
+    this.setState((currentState) => ({
+      chunksToDisplay: updatedChunksToDisplay,
+    }));
+  }
+
+  onRowChanged = (e) => {
+    this.setState((currentState) => ({
+      rowInput: parseInt(e.target.value),
+    }));
+  }
+
+  onColumnChanged = (e) => {
+    this.setState((currentState) => ({
+      columnInput: parseInt(e.target.value),
+    }));
+  }
+
+  chunkExists(newChunkCoords) {
+  const { chunksToDisplay } = this.state;
+    for (const existingChunkCoords of chunksToDisplay) {
+      if((existingChunkCoords.row === newChunkCoords.row) && (existingChunkCoords.column === newChunkCoords.column)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  displayChunkMaterials = () => {   
+    const { chunksToDisplay } = this.state;
+    let materialsTotal = this.getNewMaterialsList();
+    for (const chunkCoords of chunksToDisplay) {
+      this.addChunk(materialsTotal, chunkCoords.row, chunkCoords.column);
+    }
+    return materialsTotal;
+  }
+
+  displayAllMaterials = () => {
     const { currentMaterialsData } = this.props;
+    let materialsTotal = this.getNewMaterialsList();
+    let curRow = 0, curCol = 0;
+    for (const rowOfChunks of currentMaterialsData.chunks) {
+      curRow++;
+      for (const chunk of rowOfChunks) {
+        curCol++;
+        this.addChunk(materialsTotal, curRow, curCol);
+      }
+      curCol = 0;
+    }
+    return materialsTotal;
+  }
+
+  addChunk (destination, row, col) {
+    const { currentMaterialsData } = this.props;
+    let rowNum = 0, colNum = 0;
+    for (const rowOfChunks of currentMaterialsData.chunks) {
+      //rowNum++;
+      if(++rowNum !== row) continue;
+      for (const chunk of rowOfChunks) {
+        //colNum++;
+        if(++colNum !== col) continue;
+        this.addSupportBlockCount(destination, chunk);
+        this.addMaterialsCount(destination, chunk);
+      }
+      colNum = 0;
+    }
+  }
+
+  addSupportBlockCount(destination, chunk) {
     const { onlyMaxPerSplit } = this.state;
-    let supportBlockCount = 0;
-    currentMaterialsData.maps.forEach((row) => {
-      row.forEach((map) => {
-        const count = map.supportBlockCount;
-        if (onlyMaxPerSplit) {
-          supportBlockCount = Math.max(supportBlockCount, count);
-        } else {
-          supportBlockCount += count;
-        }
-      });
+    if (onlyMaxPerSplit) {
+      destination.supportBlockCount = Math.max(destination.supportBlockCount, chunk.supportBlockCount);
+    } 
+    else {
+      destination.supportBlockCount += chunk.supportBlockCount;
+    }
+  }
+
+  addMaterialsCount(destination, chunk) {
+    const { onlyMaxPerSplit } = this.state;
+    for (const [colourSetId, materialCount] of Object.entries(chunk.materials)) {
+      if (onlyMaxPerSplit) {
+        destination.materials[colourSetId] = Math.max(destination.materials[colourSetId], materialCount);
+      } 
+      else {
+        destination.materials[colourSetId] += materialCount;
+      }
+    }
+  }
+
+  getSortedNonZeroMaterials(materialsList) {
+    return Object.entries(materialsList)
+      .filter(([_, value]) => value !== 0)
+      .sort((first, second) => {
+       return second[1] - first[1];
     });
-    return supportBlockCount;
+  }
+
+  getNewMaterialsList() {
+    const { coloursJSON } = this.props;
+    let newMaterialsList = { materials: {}, supportBlockCount: 0 };
+    for (const colourSetId of Object.keys(coloursJSON)) {
+      newMaterialsList.materials[colourSetId] = 0;
+    }
+    return newMaterialsList;
   }
 
   formatMaterialCount = (count) => {
@@ -96,9 +184,17 @@ class Materials extends Component {
 
   render() {
     const { getLocaleString, coloursJSON, optionValue_supportBlock, currentMaterialsData } = this.props;
-    const { onlyMaxPerSplit } = this.state;
-    const nonZeroMaterialsItems = this.getMaterialsCount_nonZeroMaterialsItems();
-    const supportBlockCount = this.getMaterialsCount_supportBlock();
+    const { onlyMaxPerSplit, allMaterials} = this.state;
+    let materialsToDisplay = {};
+    if(allMaterials) {
+      materialsToDisplay = this.displayAllMaterials();
+    }
+    else {
+      materialsToDisplay = this.displayChunkMaterials();
+    }
+
+    const nonZeroMaterialsItems = this.getSortedNonZeroMaterials(materialsToDisplay.materials);
+    const supportBlockCount = materialsToDisplay.supportBlockCount;
     const supportBlockIds = this.colourSetIdAndBlockIdFromNBTName(optionValue_supportBlock);
     return (
       <div className="section materialsDiv">
@@ -110,6 +206,26 @@ class Materials extends Component {
           </b>
         </Tooltip>{" "}
         <input type="checkbox" checked={onlyMaxPerSplit} onChange={this.onOnlyMaxPerSplitChange} />
+        <br />
+        <b>
+        {getLocaleString("MATERIALS/CHUNKMATS-DISPLAYALL-CHECK")} {":"}
+        </b>
+        <input type="checkbox" checked={allMaterials} onChange={this.onDisplayAllChange} />
+        <br />
+        <Tooltip tooltipText={getLocaleString("MATERIALS/CHUNKMATS-TT")}>
+          <b>
+            {getLocaleString("MATERIALS/CHUNKMATS")}
+            {":"}
+          </b>
+        </Tooltip>{" "}
+        <br />
+        {getLocaleString("MATERIALS/CHUNKMATS-ROWS")}{" "}
+        <input type="text" class="chunkCoordsInput" name="rowVal" onChange={this.onRowChanged}/>
+        {getLocaleString("MATERIALS/CHUNKMATS-COLUMNS")}{" "}
+        <input type="text" class="chunkCoordsInput" name="colVal" onChange={this.onColumnChanged}/>
+        <br />
+        <button onClick={this.onResetList}>Reset</button>
+        <button onClick={this.onAddChunkToList}>Add</button>
         <br />
         <table id="materialtable">
           <tbody>

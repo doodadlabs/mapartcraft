@@ -13,12 +13,14 @@ var optionValue_transparency;
 var optionValue_transparencyTolerance;
 var optionValue_betterColour;
 var optionValue_dithering;
-
+var chunksPerRowOfMap = 8;  //Despite name, can be non-chunk sized but 128 must be evenly divisible by this.
+var blocksPerRowOfChunk = 128 / chunksPerRowOfMap;
 var colourSetsToUse = []; // colourSetIds and shades to use in map
 var exactColourCache = new Map(); // for mapping RGB that exactly matches in coloursJSON to colourSetId and tone
 var colourCache = new Map(); // cache for reusing colours in identical pixels
 var labCache = new Map();
 
+var chunks = [];
 var maps = [];
 
 /*
@@ -199,16 +201,33 @@ function getMapartImageDataAndMaterials() {
     maps.push(mapsRowToAdd);
   }
 
+  for (let y = 0; y < chunksPerRowOfMap*optionValue_mapSize_y; y++) {
+    let chunkRowToAdd = [];
+    for (let x = 0; x < chunksPerRowOfMap*optionValue_mapSize_x; x++) {
+      let chunkEntryToAdd = { materials: {}, supportBlockCount: 0 };
+      colourSetsToUse.forEach((colourSet) => {
+        chunkEntryToAdd.materials[colourSet.colourSetId] = 0;
+      });      
+      chunkRowToAdd.push(chunkEntryToAdd);
+    }
+    chunks.push(chunkRowToAdd);
+  }
+  
   if (colourSetsToUse.length === 0) {
     return;
   }
 
   if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId) {
-    maps.forEach((row) =>
+    rowNum=0;
+    maps.forEach((row) => {
       row.forEach((map) => {
+        for(i=0; i<chunksPerRowOfMap*optionValue_mapSize_x; i++) {
+          chunks[rowNum][i].supportBlockCount = blocksPerRowOfChunk;          
+        }
         map.supportBlockCount = 128; // initialise with noobline count
       })
-    );
+      rowNum++;
+    });
   }
 
   let ditherMatrix;
@@ -239,6 +258,8 @@ function getMapartImageDataAndMaterials() {
     const multimapWidth = optionValue_mapSize_x * 128;
     const multimap_x = (i / 4) % multimapWidth;
     const multimap_y = (i / 4 - multimap_x) / multimapWidth;
+    const whichChunk_x = Math.floor(multimap_x / blocksPerRowOfChunk);
+    const whichChunk_y = Math.floor(multimap_y / blocksPerRowOfChunk);
     const whichMap_x = Math.floor(multimap_x / 128);
     const whichMap_y = Math.floor(multimap_y / 128);
     const individualMap_y = multimap_y % 128;
@@ -400,6 +421,7 @@ function getMapartImageDataAndMaterials() {
           }
           case WhereSupportBlocksModes.IMPORTANT.uniqueId: {
             if (isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone)) {
+              chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
               maps[whichMap_y][whichMap_x].supportBlockCount += 1;
             }
             break;
@@ -415,6 +437,7 @@ function getMapartImageDataAndMaterials() {
                   closestColourSetIdAndTone.tone === "dark" ||
                   (closestColourSetIdAndTone.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone))
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 if (
@@ -422,6 +445,7 @@ function getMapartImageDataAndMaterials() {
                   closestColourSetIdAndTone.tone === "dark" &&
                   isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone)
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 break;
@@ -441,6 +465,7 @@ function getMapartImageDataAndMaterials() {
                   (closestColourSetIdAndTone.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone)) ||
                   isSupportBlockMandatoryForColourSetIdAndTone(coloursBlock0)
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 if (
@@ -448,6 +473,7 @@ function getMapartImageDataAndMaterials() {
                   closestColourSetIdAndTone.tone === "dark" &&
                   isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone)
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 break;
@@ -468,6 +494,7 @@ function getMapartImageDataAndMaterials() {
                   isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone) ||
                   (closestColourSetIdAndTone.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(penultimateColoursBlock))
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 if (
@@ -475,6 +502,7 @@ function getMapartImageDataAndMaterials() {
                   closestColourSetIdAndTone.tone === "light" &&
                   isSupportBlockMandatoryForColourSetIdAndTone(penultimateColoursBlock)
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
               }
@@ -502,6 +530,7 @@ function getMapartImageDataAndMaterials() {
                   isSupportBlockMandatoryForColourSetIdAndTone(coloursBlock) ||
                   (coloursBlock.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(coloursBlock_north))
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 if (
@@ -509,6 +538,7 @@ function getMapartImageDataAndMaterials() {
                   (coloursBlock_south.tone === "dark" && isSupportBlockMandatoryForColourSetIdAndTone(coloursBlock_south)) ||
                   (coloursBlock.tone === "light" && isSupportBlockMandatoryForColourSetIdAndTone(coloursBlock_north))
                 ) {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 break;
@@ -520,21 +550,26 @@ function getMapartImageDataAndMaterials() {
             switch (individualMap_y) {
               case 0: {
                 // noobline
+                chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                 maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 if (closestColourSetIdAndTone.tone === "dark") {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 break;
               }
               case 127: {
                 // falls through
+                chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                 maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 if (closestColourSetIdAndTone.tone === "light") {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
               }
               // eslint-disable-next-line no-fallthrough
               default: {
+                chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                 maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 const coloursBlock_north_index = i - 4 * 128 * optionValue_mapSize_x;
                 const coloursBlock_north = exactRGBToColourSetIdAndTone([
@@ -543,6 +578,7 @@ function getMapartImageDataAndMaterials() {
                   canvasImageData.data[coloursBlock_north_index + 2],
                 ]);
                 if (coloursBlock_north.tone === "light" || closestColourSetIdAndTone.tone === "dark") {
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                   maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                 }
                 break;
@@ -554,6 +590,7 @@ function getMapartImageDataAndMaterials() {
             break;
           }
         }
+        chunks[whichChunk_y][whichChunk_x].materials[closestColourSetIdAndTone.colourSetId] += 1;
         maps[whichMap_y][whichMap_x].materials[closestColourSetIdAndTone.colourSetId] += 1;
       }
     }
@@ -585,6 +622,7 @@ onmessage = (e) => {
     body: {
       pixels: canvasImageData,
       maps: maps,
+      chunks: chunks,
       currentSelectedBlocks: selectedBlocks,
     },
   });

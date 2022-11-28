@@ -58,6 +58,7 @@ class MapartController extends Component {
     currentMaterialsData: {
       pixelsData: null,
       maps: [[]], // entries are dictionaries with keys "materials", "supportBlockCount"
+      chunks: [[]],
       currentSelectedBlocks: {}, // we keep this soley for materials.js
     },
     mapPreviewWorker_inProgress: false,
@@ -720,6 +721,7 @@ class MapartController extends Component {
           // reset currentMaterialsData as materials.js uses a cached version of materials which could contain blocks which no longer exist
           pixelsData: null,
           maps: [[]],
+          chunks:[[]],
           currentSelectedBlocks: {},
         },
       };
