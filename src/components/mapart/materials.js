@@ -224,8 +224,8 @@ class Materials extends Component {
         {getLocaleString("MATERIALS/CHUNKMATS-COLUMNS")}{" "}
         <input type="text" class="chunkCoordsInput" name="colVal" onChange={this.onColumnChanged}/>
         <br />
-        <button onClick={this.onResetList}>Reset</button>
-        <button onClick={this.onAddChunkToList}>Add</button>
+        <button onClick={this.onResetList}>{getLocaleString("MATERIALS/CHUNKMATS-RESET")}</button>
+        <button onClick={this.onAddChunkToList}>{getLocaleString("MATERIALS/CHUNKMATS-ADD")}</button>
         <br />
         <table id="materialtable">
           <tbody>
