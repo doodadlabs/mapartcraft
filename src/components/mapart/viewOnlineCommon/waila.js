@@ -11,7 +11,7 @@ class Waila extends Component {
     const { getLocaleString, coloursJSON, selectedBlock, ...props_others } = this.props;
     return (
       <div className={"viewOnline_waila"} {...props_others}>
-        <h3>{`x: ${selectedBlock.x.toString()} y: ${selectedBlock.y.toString()} z: ${selectedBlock.z.toString()}`}</h3>
+        <h3>{`x: ${selectedBlock.x.toString()} y: ${selectedBlock.y.toString()} z: ${selectedBlock.z.toString()} Row: ${selectedBlock.row.toString()} Column: ${selectedBlock.column.toString()}`}</h3>
         <BlockImage
           getLocaleString={getLocaleString}
           coloursJSON={coloursJSON}

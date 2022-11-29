@@ -222,11 +222,15 @@ class ViewOnline2D extends Component {
           if (block_coords[0] === block_x && block_coords[2] === block_z) {
             const block_paletteId = block.state.value;
             const [selectedBlock_colourSetId, selectedBlock_blockId] = this.paletteIdToColourSetIdAndBlockId[block_paletteId];
+            const chunkRow = Math.ceil(block_coords[2]/16);
+            const chunkCol = Math.ceil((block_coords[0]+1)/16);
             this.setState({
               selectedBlock: {
                 x: block_coords[0],
                 y: block_coords[1],
                 z: block_coords[2],
+                row: chunkRow,
+                column: chunkCol,
                 colourSetId: selectedBlock_colourSetId,
                 blockId: selectedBlock_blockId,
               },
