@@ -9,10 +9,11 @@ import "./materials.css";
 class Materials extends Component {
   state = { onlyMaxPerSplit: false,
             chunksToDisplay: [],
-            rowInput: 0,
-            columnInput: 0,
             allMaterials: true,
           };
+  
+  rowInput = 0;
+  columnInput = 0;
 
   onOnlyMaxPerSplitChange = () => {
     this.setState((currentState) => ({
@@ -34,8 +35,8 @@ class Materials extends Component {
   }
 
   onAddChunkToList = () => {
-    const { rowInput, columnInput, chunksToDisplay } = this.state;
-    let chunkCoords = { row: rowInput, column: columnInput };
+    const { chunksToDisplay } = this.state;
+    let chunkCoords = { row: this.rowInput, column: this.columnInput };
     let updatedChunksToDisplay = chunksToDisplay;
     if(!this.chunkExists(chunkCoords)) {
       chunksToDisplay.push(chunkCoords);
@@ -46,15 +47,11 @@ class Materials extends Component {
   }
 
   onRowChanged = (e) => {
-    this.setState((currentState) => ({
-      rowInput: parseInt(e.target.value),
-    }));
+    this.rowInput=parseInt(e.target.value);
   }
 
   onColumnChanged = (e) => {
-    this.setState((currentState) => ({
-      columnInput: parseInt(e.target.value),
-    }));
+    this.columnInput=parseInt(e.target.value);
   }
 
   chunkExists(newChunkCoords) {
@@ -95,10 +92,8 @@ class Materials extends Component {
     const { currentMaterialsData } = this.props;
     let rowNum = 0, colNum = 0;
     for (const rowOfChunks of currentMaterialsData.chunks) {
-      //rowNum++;
       if(++rowNum !== row) continue;
       for (const chunk of rowOfChunks) {
-        //colNum++;
         if(++colNum !== col) continue;
         this.addSupportBlockCount(destination, chunk);
         this.addMaterialsCount(destination, chunk);
