@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/mapartcraft/static/css/main.3c7e5a9f.chunk.css",
-    "main.js": "/mapartcraft/static/js/main.8f2784e6.chunk.js",
-    "main.js.map": "/mapartcraft/static/js/main.8f2784e6.chunk.js.map",
+    "main.css": "/mapartcraft/static/css/main.38a6682e.chunk.css",
+    "main.js": "/mapartcraft/static/js/main.a86a9cea.chunk.js",
+    "main.js.map": "/mapartcraft/static/js/main.a86a9cea.chunk.js.map",
     "runtime-main.js": "/mapartcraft/static/js/runtime-main.3b65fc8a.js",
     "runtime-main.js.map": "/mapartcraft/static/js/runtime-main.3b65fc8a.js.map",
     "static/js/2.0c713ddd.chunk.js": "/mapartcraft/static/js/2.0c713ddd.chunk.js",
     "static/js/2.0c713ddd.chunk.js.map": "/mapartcraft/static/js/2.0c713ddd.chunk.js.map",
     "index.html": "/mapartcraft/index.html",
-    "static/css/main.3c7e5a9f.chunk.css.map": "/mapartcraft/static/css/main.3c7e5a9f.chunk.css.map",
+    "static/css/main.38a6682e.chunk.css.map": "/mapartcraft/static/css/main.38a6682e.chunk.css.map",
     "static/js/2.0c713ddd.chunk.js.LICENSE.txt": "/mapartcraft/static/js/2.0c713ddd.chunk.js.LICENSE.txt",
     "static/media/classicVsValley.fb0924c8.png": "/mapartcraft/static/media/classicVsValley.fb0924c8.png",
     "static/media/flag.096c0012.svg": "/mapartcraft/static/media/flag.096c0012.svg",
@@ -33,7 +33,7 @@
   "entrypoints": [
     "static/js/runtime-main.3b65fc8a.js",
     "static/js/2.0c713ddd.chunk.js",
-    "static/css/main.3c7e5a9f.chunk.css",
-    "static/js/main.8f2784e6.chunk.js"
+    "static/css/main.38a6682e.chunk.css",
+    "static/js/main.a86a9cea.chunk.js"
   ]
 }
