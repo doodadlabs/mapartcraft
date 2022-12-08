@@ -24,6 +24,11 @@
   z-index: 122;
 }
 
+.viewOnline2DContainer .chunkCoordsInput {
+  width: 2em;
+  padding: 1px;
+}
+
 .viewOnline2DContainer canvas {
   z-index: 121;
   image-rendering: optimizeSpeed; /* Older versions of FF */
