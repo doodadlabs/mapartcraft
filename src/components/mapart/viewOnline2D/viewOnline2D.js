@@ -132,6 +132,7 @@ class ViewOnline2D extends Component {
           32
         );
         /*
+        //original 2D view block shadow code
           let currentY = null;
           if (block_coords[2] !== 0) {
           if (block_coords[1] > currentY) {
@@ -188,10 +189,6 @@ class ViewOnline2D extends Component {
     };
     img_textures.src = IMG_Textures;
   }
-
-  /*getChunkRect(chunkRect, chunkRow, chunkColumn) {
-    
-  }*/
 
   isInFocusedChunkArray(chunkRow, chunkColumn) {
     const { focusedChunks } = this.state;
