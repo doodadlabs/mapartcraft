@@ -474,8 +474,16 @@ class MapartController extends Component {
     }
   };
 
+  canDeletePreset = () => {
+    const { selectedPresetName } = this.state;
+    return selectedPresetName !== "None" && !DefaultPresets.find((defaultPreset) => defaultPreset.name === selectedPresetName);
+  };
+
   handleDeletePreset = () => {
+    const { getLocaleString } = this.props;
     const { presets, selectedPresetName } = this.state;
+    if (!this.canDeletePreset()) return;
+    if (!window.confirm(`${getLocaleString("BLOCK-SELECTION/PRESETS/DELETE-CONFIRM")} ${selectedPresetName}`)) return;
     const presets_new = presets.filter((preset) => preset.name !== selectedPresetName);
     this.setState({
       presets: presets_new,
@@ -780,6 +788,7 @@ class MapartController extends Component {
           selectedBlocks={selectedBlocks}
           presets={presets}
           selectedPresetName={selectedPresetName}
+          canDeletePreset={this.canDeletePreset}
           onPresetChange={this.handlePresetChange}
           onDeletePreset={this.handleDeletePreset}
           onSavePreset={this.handleSavePreset}

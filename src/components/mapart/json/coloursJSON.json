@@ -327,6 +327,36 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 10
+            },
+            "11": {
+                "displayName": "Birch Pressure Plate",
+                "validVersions": {
+                    "1.13.2": {
+                        "NBTName": "birch_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.14.4": "&1.13.2",
+                    "1.15.2": "&1.13.2",
+                    "1.16.5": "&1.13.2",
+                    "1.17.1": "&1.13.2",
+                    "1.18.2": "&1.13.2",
+                    "1.19": "&1.13.2"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 11
+            },
+            "12": {
+                "displayName": "Ochre Froglight",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "ochre_froglight",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 12
             }
         },
         "mapdatId": 2,
@@ -395,6 +425,20 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 1
+            },
+            "2": {
+                "displayName": "White Candle",
+                "validVersions": {
+                    "1.17.1": {
+                        "NBTName": "white_candle",
+                        "NBTArgs": {}
+                    },
+                    "1.18.2": "&1.17.1",
+                    "1.19": "&1.17.1"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 2
             }
         },
         "mapdatId": 3,
@@ -1142,6 +1186,36 @@
                 "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 7
+            },
+            "9": {
+                "displayName": "Jungle Pressure Plate",
+                "validVersions": {
+                    "1.13.2": {
+                        "NBTName": "jungle_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.14.4": "&1.13.2",
+                    "1.15.2": "&1.13.2",
+                    "1.16.5": "&1.13.2",
+                    "1.17.1": "&1.13.2",
+                    "1.18.2": "&1.13.2",
+                    "1.19": "&1.13.2"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 9
+            },
+            "10": {
+                "displayName": "Packed Mud",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "packed_mud",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 10
             }
         },
         "mapdatId": 10,
@@ -1466,6 +1540,25 @@
                 "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 7
+            },
+            "14": {
+                "displayName": "Stone Pressure Plate",
+                "validVersions": {
+                    "1.12.2": {
+                        "NBTName": "stone_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.13.2": "&1.12.2",
+                    "1.14.4": "&1.12.2",
+                    "1.15.2": "&1.12.2",
+                    "1.16.5": "&1.12.2",
+                    "1.17.1": "&1.12.2",
+                    "1.18.2": "&1.12.2",
+                    "1.19": "&1.12.2"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 14
             }
         },
         "mapdatId": 11,
@@ -1635,6 +1728,28 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 3
+            },
+            "4": {
+                "displayName": "Oak Pressure Plate",
+                "validVersions": {
+                    "1.12.2": {
+                        "NBTName": "wooden_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.13.2": {
+                        "NBTName": "oak_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.14.4": "&1.13.2",
+                    "1.15.2": "&1.13.2",
+                    "1.16.5": "&1.13.2",
+                    "1.17.1": "&1.13.2",
+                    "1.18.2": "&1.13.2",
+                    "1.19": "&1.13.2"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 4
             }
         },
         "mapdatId": 13,
@@ -2433,6 +2548,24 @@
                 "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 18
+            },
+            "19": {
+                "displayName": "Acacia Pressure Plate",
+                "validVersions": {
+                    "1.13.2": {
+                        "NBTName": "acacia_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.14.4": "&1.13.2",
+                    "1.15.2": "&1.13.2",
+                    "1.16.5": "&1.13.2",
+                    "1.17.1": "&1.13.2",
+                    "1.18.2": "&1.13.2",
+                    "1.19": "&1.13.2"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 19
             }
         },
         "mapdatId": 15,
@@ -3366,6 +3499,18 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 5
+            },
+            "6": {
+                "displayName": "Pearlescent Froglight",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "pearlescent_froglight",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 6
             }
         },
         "mapdatId": 20,
@@ -4681,6 +4826,24 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 11
+            },
+            "12": {
+                "displayName": "Dark Oak Pressure Plate",
+                "validVersions": {
+                    "1.13.2": {
+                        "NBTName": "dark_oak_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.14.4": "&1.13.2",
+                    "1.15.2": "&1.13.2",
+                    "1.16.5": "&1.13.2",
+                    "1.17.1": "&1.13.2",
+                    "1.18.2": "&1.13.2",
+                    "1.19": "&1.13.2"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 12
             }
         },
         "mapdatId": 26,
@@ -5112,6 +5275,56 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 9
+            },
+            "10": {
+                "displayName": "Mangrove Log (vertical)",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mangrove_log",
+                        "NBTArgs": {
+                            "axis": "y"
+                        }
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 10
+            },
+            "11": {
+                "displayName": "Mangrove Planks",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mangrove_planks",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 11
+            },
+            "12": {
+                "displayName": "Mangrove Slab",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mangrove_slab",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 12
+            },
+            "13": {
+                "displayName": "Mangrove Pressure Plate",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mangrove_pressure_plate",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 13
             }
         },
         "mapdatId": 28,
@@ -5392,6 +5605,57 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 11
+            },
+            "13": {
+                "displayName": "Polished Blackstone Pressure Plate",
+                "validVersions": {
+                    "1.16.5": {
+                        "NBTName": "polished_blackstone_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.17.1": "&1.16.5",
+                    "1.18.2": "&1.16.5",
+                    "1.19": "&1.16.5"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 13
+            },
+            "14": {
+                "displayName": "Sculk",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "sculk",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 14
+            },
+            "15": {
+                "displayName": "Sculk Catalyst",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "sculk_catalyst",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 15
+            },
+            "16": {
+                "displayName": "Sculk Shrieker",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "sculk_shrieker",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 16
             }
         },
         "mapdatId": 29,
@@ -5897,6 +6161,50 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 5
+            },
+            "6": {
+                "displayName": "Spruce Pressure Plate",
+                "validVersions": {
+                    "1.13.2": {
+                        "NBTName": "spruce_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.14.4": "&1.13.2",
+                    "1.15.2": "&1.13.2",
+                    "1.16.5": "&1.13.2",
+                    "1.17.1": "&1.13.2",
+                    "1.18.2": "&1.13.2",
+                    "1.19": "&1.13.2"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 6
+            },
+            "7": {
+                "displayName": "Mangrove Log (horizontal)",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mangrove_log",
+                        "NBTArgs": {
+                            "axis": "x"
+                        }
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 7
+            },
+            "8": {
+                "displayName": "Mangrove Roots",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mangrove_roots",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 8
             }
         },
         "mapdatId": 34,
@@ -6575,6 +6883,30 @@
                 "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 2
+            },
+            "3": {
+                "displayName": "Mud Bricks",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mud_bricks",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 3
+            },
+            "4": {
+                "displayName": "Mud Brick Slab",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mud_brick_slab",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 4
             }
         },
         "mapdatId": 44,
@@ -6627,6 +6959,18 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 0
+            },
+            "1": {
+                "displayName": "Mud",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "mud",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 1
             }
         },
         "mapdatId": 45,
@@ -6797,6 +7141,20 @@
                 "supportBlockMandatory": false,
                 "flammable": false,
                 "presetIndex": 1
+            },
+            "2": {
+                "displayName": "Pointed Dripstone",
+                "validVersions": {
+                    "1.17.1": {
+                        "NBTName": "pointed_dripstone",
+                        "NBTArgs": {}
+                    },
+                    "1.18.2": "&1.17.1",
+                    "1.19": "&1.17.1"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 2
             }
         },
         "mapdatId": 48,
@@ -7084,6 +7442,21 @@
                 "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 3
+            },
+            "4": {
+                "displayName": "Crimson Pressure Plate",
+                "validVersions": {
+                    "1.16.5": {
+                        "NBTName": "crimson_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.17.1": "&1.16.5",
+                    "1.18.2": "&1.16.5",
+                    "1.19": "&1.16.5"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 4
             }
         },
         "mapdatId": 53,
@@ -7329,6 +7702,21 @@
                 "supportBlockMandatory": true,
                 "flammable": false,
                 "presetIndex": 5
+            },
+            "6": {
+                "displayName": "Warped Pressure Plate",
+                "validVersions": {
+                    "1.16.5": {
+                        "NBTName": "warped_pressure_plate",
+                        "NBTArgs": {}
+                    },
+                    "1.17.1": "&1.16.5",
+                    "1.18.2": "&1.16.5",
+                    "1.19": "&1.16.5"
+                },
+                "supportBlockMandatory": true,
+                "flammable": false,
+                "presetIndex": 6
             }
         },
         "mapdatId": 56,
@@ -7586,6 +7974,18 @@
                 "supportBlockMandatory": true,
                 "flammable": true,
                 "presetIndex": 0
+            },
+            "1": {
+                "displayName": "Verdant Froglight",
+                "validVersions": {
+                    "1.19": {
+                        "NBTName": "verdant_froglight",
+                        "NBTArgs": {}
+                    }
+                },
+                "supportBlockMandatory": false,
+                "flammable": false,
+                "presetIndex": 1
             }
         },
         "mapdatId": 61,
