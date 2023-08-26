@@ -37,7 +37,7 @@ class ViewOnline2D extends Component {
 
   drawNBT() {
     const { coloursJSON, optionValue_version, optionValue_mapSize_x, optionValue_mapSize_y, optionValue_staircasing } = this.props;
-    const { viewOnline_NBT_decompressed, focusedChunks } = this.state;
+    const { viewOnline_NBT_decompressed } = this.state;
     const { canvasRef_viewOnline } = this;
 
     this.paletteIdToColourSetIdAndBlockId = [];
@@ -165,7 +165,6 @@ class ViewOnline2D extends Component {
       }
       for (let whichChunk_x = 0; whichChunk_x < 8 * optionValue_mapSize_x; whichChunk_x++) {
         for (let whichChunk_y = -1; whichChunk_y < 8 * optionValue_mapSize_y; whichChunk_y++) {
-          let chunkRect = { x: 0, y: 0, width: 0, height: 0 };
           if(!this.isFocusedChunkArrayEmpty()) {
             if(whichChunk_y > -1) {
               if(!this.isInFocusedChunkArray(whichChunk_y+1, whichChunk_x+1)) {
