@@ -127,9 +127,9 @@ class Materials extends Component {
   getSortedNonZeroMaterials(materialsList) {
     return Object.entries(materialsList)
       .filter(([_, value]) => value !== 0)
-      .sort((first, second) => {
-       return second[1] - first[1];
-    });
+//      .sort((first, second) => {
+//       return second[1] - first[1];
+//    });
   }
 
   getNewMaterialsList() {
