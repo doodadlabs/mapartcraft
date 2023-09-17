@@ -14,6 +14,7 @@ class Materials extends Component {
   
   rowInput = 0;
   columnInput = 0;
+  alphaColorIdx = 61;
 
   onOnlyMaxPerSplitChange = () => {
     this.setState((currentState) => ({
@@ -119,11 +120,15 @@ class Materials extends Component {
         destination.materials[colourSetId] = Math.max(destination.materials[colourSetId], materialCount);
       } 
       else {
-        destination.materials[colourSetId] += materialCount;
+        if(colourSetId != this.alphaColorIdx) {
+          destination.materials[colourSetId] += materialCount;
+        }
       }
     }
   }
 
+  //Sorting is a prettier output, but player feedback is that they organize their storage around the static mats
+  //list because it is a predictable order. Sorting actually makes them do more work to gather mats from storage. 
   getSortedNonZeroMaterials(materialsList) {
     return Object.entries(materialsList)
       .filter(([_, value]) => value !== 0)

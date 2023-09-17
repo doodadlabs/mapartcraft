@@ -8530,5 +8530,56 @@
     },
     "mapdatId": 61,
     "colourName": "Glow Lichen"
+  },
+  "61": {
+    "tonesRGB": {
+      "dark": [
+        -100,
+        -100,
+        -100
+      ],
+      "normal": [
+        -100,
+        -100,
+        -100
+      ],
+      "light": [
+        -100,
+        -100,
+        -100
+      ],
+      "unobtainable": [
+        -100,
+        -100,
+        -100
+      ]
+    },
+    "blocks": {
+      "0": {
+        "displayName": "Air",
+        "validVersions": {
+          "1.12.2": {
+            "NBTName": "air",
+            "NBTArgs": {}
+          },
+          "1.13.2": {
+            "NBTName": "air",
+            "NBTArgs": {}
+          },
+          "1.14.4": "&1.13.2",
+          "1.15.2": "&1.13.2",
+          "1.16.5": "&1.13.2",
+          "1.17.1": "&1.13.2",
+          "1.18.2": "&1.13.2",
+          "1.19": "&1.13.2",
+          "1.20": "&1.13.2"
+        },
+        "supportBlockMandatory": false,
+        "flammable": false,
+        "presetIndex": 0
+      }
+    },
+    "mapdatId": 1,
+    "colourName": "Air"
   }
 }
