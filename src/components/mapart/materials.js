@@ -120,7 +120,7 @@ class Materials extends Component {
         destination.materials[colourSetId] = Math.max(destination.materials[colourSetId], materialCount);
       } 
       else {
-        if(colourSetId != this.alphaColorIdx) {
+        if(colourSetId !== this.alphaColorIdx) {
           destination.materials[colourSetId] += materialCount;
         }
       }

@@ -5343,6 +5343,21 @@
         "supportBlockMandatory": false,
         "flammable": true,
         "presetIndex": 6
+      },
+      "7": {
+        "displayName": "Moss block",
+        "validVersions": {
+          "1.17.1": {
+            "NBTName": "moss_block",
+            "NBTArgs": {}
+          },
+          "1.18.2": "&1.17.1",
+          "1.19": "&1.17.1",
+          "1.20": "&1.17.1"
+        },
+        "supportBlockMandatory": false,
+        "flammable": false,
+        "presetIndex": 7
       }
     },
     "mapdatId": 27,

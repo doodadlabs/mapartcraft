@@ -160,7 +160,7 @@ class ViewOnline2D extends Component {
             MapModes.MAPDAT.staircaseModes.ON_UNOBTAINABLE.uniqueId,
           ].includes(optionValue_staircasing)
         ) {
-          if(int_colourSetId != this.alphaColorIdx) {
+          if(int_colourSetId !== this.alphaColorIdx) {
             canvasRef_viewOnline_ctx.strokeText(block_coords[1], 33 * block_coords[0] + 31, 33 * (block_coords[2] + 1) - 2, 31);
             canvasRef_viewOnline_ctx.fillText(block_coords[1], 33 * block_coords[0] + 31, 33 * (block_coords[2] + 1) - 2, 31);
           }
