@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/mapartcraft/static/css/main.39e8a6a7.chunk.css",
-    "main.js": "/mapartcraft/static/js/main.0342b667.chunk.js",
-    "main.js.map": "/mapartcraft/static/js/main.0342b667.chunk.js.map",
+    "main.js": "/mapartcraft/static/js/main.d9e4e228.chunk.js",
+    "main.js.map": "/mapartcraft/static/js/main.d9e4e228.chunk.js.map",
     "runtime-main.js": "/mapartcraft/static/js/runtime-main.768d33f9.js",
     "runtime-main.js.map": "/mapartcraft/static/js/runtime-main.768d33f9.js.map",
     "static/js/2.a06680a1.chunk.js": "/mapartcraft/static/js/2.a06680a1.chunk.js",
@@ -35,6 +35,6 @@
     "static/js/runtime-main.768d33f9.js",
     "static/js/2.a06680a1.chunk.js",
     "static/css/main.39e8a6a7.chunk.css",
-    "static/js/main.0342b667.chunk.js"
+    "static/js/main.d9e4e228.chunk.js"
   ]
 }
