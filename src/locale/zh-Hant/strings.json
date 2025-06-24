@@ -178,6 +178,7 @@
     "CHUNKMATS": "塊狀材料",
     "CHUNKMATS-TT": "塊的行和列從 1 開始.",
     "CHUNKMATS-DISPLAYALL-CHECK": "顯示所有材料",
+    "CHUNKMATS-SORTED-CHECK": "分類材料",
     "CHUNKMATS-RESET": "重置",
     "CHUNKMATS-ADD": "加",
     "CHUNKMATS-ROWS": "排",

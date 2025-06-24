@@ -178,6 +178,7 @@
     "CHUNKMATS": "Materiales para trozo",
     "CHUNKMATS-TT": "Fila y columna del fragmento que comienza en uno.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Mostrar todos los materiales",
+    "CHUNKMATS-SORTED-CHECK": "Clasificar materiales",
     "CHUNKMATS-RESET": "Reiniciar",
     "CHUNKMATS-ADD": "Agregar",
     "CHUNKMATS-ROWS": "Fila",

@@ -178,6 +178,7 @@
     "CHUNKMATS": "Materials for chunk(s)",
     "CHUNKMATS-TT": "Row and column of the chunk starting at 1.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Display all materials",
+    "CHUNKMATS-SORTED-CHECK": "Sort materials",
     "CHUNKMATS-RESET": "Reset",
     "CHUNKMATS-ADD": "Add",
     "CHUNKMATS-ROWS": "Row",

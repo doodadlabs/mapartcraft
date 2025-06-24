@@ -178,6 +178,7 @@
     "CHUNKMATS": "Materiali per pezzo",
     "CHUNKMATS-TT": "Riga e colonna del blocco a partire da uno.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Mostra tutti i materiali",
+    "CHUNKMATS-SORTED-CHECK": "Ordinare i materiali",
     "CHUNKMATS-RESET": "Ripristina",
     "CHUNKMATS-ADD": "Aggiungere",
     "CHUNKMATS-ROWS": "Riga",

@@ -178,6 +178,7 @@
     "CHUNKMATS": "Матеріали для чанка",
     "CHUNKMATS-TT": "Рядок і стовпець фрагмента, починаючи з одного.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Показати всі матеріали",
+    "CHUNKMATS-SORTED-CHECK": "Сортувати матеріали",
     "CHUNKMATS-RESET": "Скинути",
     "CHUNKMATS-ADD": "додати",
     "CHUNKMATS-ROWS": "рядок",

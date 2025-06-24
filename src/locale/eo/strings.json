@@ -178,6 +178,7 @@
     "CHUNKMATS": "Materialoj por peco",
     "CHUNKMATS-TT": "Vico kaj kolumno de la peco komencante je unu.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Montru ĉiujn materialojn",
+    "CHUNKMATS-SORTED-CHECK": "Ordigi materialojn",
     "CHUNKMATS-RESET": "Restarigi",
     "CHUNKMATS-ADD": "Aldoni",
     "CHUNKMATS-ROWS": "Vico",

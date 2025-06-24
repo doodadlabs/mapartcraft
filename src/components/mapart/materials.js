@@ -10,6 +10,7 @@ class Materials extends Component {
   state = { onlyMaxPerSplit: false,
             chunksToDisplay: [],
             allMaterials: true,
+            sortMaterials: false,
           };
   
   rowInput = 0;
@@ -26,6 +27,12 @@ class Materials extends Component {
   onDisplayAllChange = () => {
     this.setState((currentState) => ({
       allMaterials: !currentState.allMaterials,
+    }));
+  };
+
+  onDisplaySortChange = () => {
+    this.setState((currentState) => ({
+      sortMaterials: !currentState.sortMaterials,
     }));
   };
 
@@ -127,14 +134,19 @@ class Materials extends Component {
     }
   }
 
-  //Sorting is a prettier output, but player feedback is that they organize their storage around the static mats
-  //list because it is a predictable order. Sorting actually makes them do more work to gather mats from storage. 
   getSortedNonZeroMaterials(materialsList) {
-    return Object.entries(materialsList)
-      .filter(([_, value]) => value !== 0)
-//      .sort((first, second) => {
-//       return second[1] - first[1];
-//    });
+    const { sortMaterials } = this.state;
+    if(sortMaterials) {
+      return Object.entries(materialsList)
+        .filter(([_, value]) => value !== 0)
+        .sort((first, second) => {
+         return second[1] - first[1];
+      });
+    }
+    else {
+      return Object.entries(materialsList)
+        .filter(([_, value]) => value !== 0)
+    }
   }
 
   getNewMaterialsList() {
@@ -184,7 +196,7 @@ class Materials extends Component {
 
   render() {
     const { getLocaleString, coloursJSON, optionValue_supportBlock, currentMaterialsData } = this.props;
-    const { onlyMaxPerSplit, allMaterials} = this.state;
+    const { onlyMaxPerSplit, allMaterials, sortMaterials} = this.state;
     let materialsToDisplay = {};
     if(allMaterials) {
       materialsToDisplay = this.displayAllMaterials();
@@ -211,6 +223,11 @@ class Materials extends Component {
         {getLocaleString("MATERIALS/CHUNKMATS-DISPLAYALL-CHECK")} {":"}
         </b>
         <input type="checkbox" checked={allMaterials} onChange={this.onDisplayAllChange} />
+        <b>
+        <br />
+        {getLocaleString("MATERIALS/CHUNKMATS-SORTED-CHECK")} {":"}
+        </b>
+        <input type="checkbox" checked={sortMaterials} onChange={this.onDisplaySortChange} />
         <br />
         <Tooltip tooltipText={getLocaleString("MATERIALS/CHUNKMATS-TT")}>
           <b>

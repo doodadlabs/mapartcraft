@@ -178,6 +178,7 @@
     "CHUNKMATS": "Materiais para pedaços",
     "CHUNKMATS-TT": "Linha e coluna do bloco começando em um.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Exibir todos os materiais",
+    "CHUNKMATS-SORTED-CHECK": "Classificar materiais",
     "CHUNKMATS-RESET": "Redefinir",
     "CHUNKMATS-ADD": "Adicionar",
     "CHUNKMATS-ROWS": "Fileira",

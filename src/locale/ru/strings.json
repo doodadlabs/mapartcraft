@@ -178,6 +178,7 @@
     "CHUNKMATS": "Материалы для чанка",
     "CHUNKMATS-TT": "Строка и столбец чанка, начиная с единицы.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Показать все материалы",
+    "CHUNKMATS-SORTED-CHECK": "Сортировка материалов",
     "CHUNKMATS-RESET": "Перезагрузить",
     "CHUNKMATS-ADD": "Добавлять",
     "CHUNKMATS-ROWS": "ряд",

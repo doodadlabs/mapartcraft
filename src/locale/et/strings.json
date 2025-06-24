@@ -178,6 +178,7 @@
     "CHUNKMATS": "Materjalid tükkideks",
     "CHUNKMATS-TT": "Tüki rida ja veerg algavad ühest.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Kuva kõik materjalid",
+    "CHUNKMATS-SORTED-CHECK": "Materjalid sorteerida",
     "CHUNKMATS-RESET": "Lähtesta",
     "CHUNKMATS-ADD": "Lisama",
     "CHUNKMATS-ROWS": "Rida",

@@ -178,6 +178,7 @@
     "CHUNKMATS": "Matériaux pour morceau",
     "CHUNKMATS-TT": "Ligne et colonne du morceau commençant à un.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Afficher tous les matériaux",
+    "CHUNKMATS-SORTED-CHECK": "Trier les matériaux",
     "CHUNKMATS-RESET": "Réinitialiser",
     "CHUNKMATS-ADD": "Ajouter",
     "CHUNKMATS-ROWS": "Ligne",

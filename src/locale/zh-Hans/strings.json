@@ -178,6 +178,7 @@
     "CHUNKMATS": "大块材料",
     "CHUNKMATS-TT": "块的行和列从一开始.",
     "CHUNKMATS-DISPLAYALL-CHECK": "显示所有材料",
+    "CHUNKMATS-SORTED-CHECK": "分类材料",
     "CHUNKMATS-RESET": "重置",
     "CHUNKMATS-ADD": "添加",
     "CHUNKMATS-ROWS": "排",

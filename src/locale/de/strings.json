@@ -178,6 +178,7 @@
     "CHUNKMATS": "Materialien für Brocken",
     "CHUNKMATS-TT": "Zeile und Spalte des Chunks beginnen bei eins.",
     "CHUNKMATS-DISPLAYALL-CHECK": "Alle Materialien anzeigen",
+    "CHUNKMATS-SORTED-CHECK": "Materialien sortieren",
     "CHUNKMATS-RESET": "Zurücksetzen",
     "CHUNKMATS-ADD": "Hinzufügen",
     "CHUNKMATS-ROWS": "Die Zeile",
