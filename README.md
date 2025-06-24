@@ -1,3 +1,15 @@
+# This fork makes the following updates to the original MapartCraft
+These updates are live on GitHub Pages (needs Chrome):  https://doodadlabs.github.io/mapartcraft/  
+
+ **What are the changes?**  
+1. Added the ability to get materials lists per chunk
+2. Has transparent blocks for use in void maps
+3. Adds various blocks not supported by original MapartCraft
+4. Unsorted materials list.  Organize your storage in the same order as MapartCraft's "Block Selection" list.  When you gather materials for a chunk/map, you can gather them more efficiently because they will always be in the same order.
+5. 2D view: highlight the chunk you are currently working on
+6. 2D view: darker chunk border
+7. 2D view: no shading (this really made it hard to see carpet color differences)
+
 # MapartCraft
 
 A Minecraft mapart schematic and map.dat generator, designed to be feasible for both server admins and survival players on servers like 2b2t, running in your browser.
