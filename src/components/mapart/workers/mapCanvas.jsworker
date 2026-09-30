@@ -24,6 +24,22 @@ var chunks = [];
 var maps = [];
 
 let alphaColorIdx = 61;
+let waterColourSetId = 10;
+
+// Water's shade comes from how deep it is: 1 waterlogged block deep is light, 5 deep is normal, 10 deep is dark.
+// Keep in sync with getWaterDepthForTone in nbt.jsworker
+function getWaterDepthForTone(tone) {
+  switch (tone) {
+    case "light":
+      return 1;
+    case "normal":
+      return 5;
+    case "dark":
+      return 10;
+    default:
+      throw new Error("Unknown tone type");
+  }
+}
 
 /*
   'maps' is a matrix with entries accessable via maps[z][x], each of which corresponds to a 128x128 map. A typical entry is:
@@ -179,7 +195,18 @@ function setupExactColourCache() {
 
 function exactRGBToColourSetIdAndTone(pixelRGB) {
   const RGBBinary = (pixelRGB[0] << 16) + (pixelRGB[1] << 8) + pixelRGB[2];
-  return exactColourCache.get(RGBBinary);
+  return toPhysicalColourSetIdAndTone(exactColourCache.get(RGBBinary));
+}
+
+function toPhysicalColourSetIdAndTone(colourSetIdAndTone) {
+  if (colourSetIdAndTone.colourSetId == waterColourSetId) {
+    return { ...colourSetIdAndTone, tone: "normal", waterDepth: getWaterDepthForTone(colourSetIdAndTone.tone) };
+  }
+  return colourSetIdAndTone;
+}
+
+function areSupportBlocksBlockedByWater(physicalColourSetIdAndTone) {
+  return physicalColourSetIdAndTone.waterDepth > 1;
 }
 
 function isSupportBlockMandatoryForColourSetIdAndTone(colourSetIdAndTone) {
@@ -420,12 +447,13 @@ function getMapartImageDataAndMaterials() {
       if(canvasImageData.data[indexA] != 0) {
         // support-block count: mapdat can skip this
         if (optionValue_modeNBTOrMapdat === MapModes.SCHEMATIC_NBT.uniqueId) {
+          closestColourSetIdAndTone = toPhysicalColourSetIdAndTone(closestColourSetIdAndTone);
           switch (optionValue_whereSupportBlocks) {
             case WhereSupportBlocksModes.NONE.uniqueId: {
               break;
             }
             case WhereSupportBlocksModes.IMPORTANT.uniqueId: {
-              if (isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone)) {
+              if (isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone) && !areSupportBlocksBlockedByWater(closestColourSetIdAndTone)) {
                 chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                 maps[whichMap_y][whichMap_x].supportBlockCount += 1;
               }
@@ -463,6 +491,9 @@ function getMapartImageDataAndMaterials() {
                     canvasImageData.data[coloursBlock0_index + 1],
                     canvasImageData.data[coloursBlock0_index + 2],
                   ]);
+                  if (areSupportBlocksBlockedByWater(coloursBlock0)) {
+                    break;
+                  }
                   if (
                     // first under-support block
                     coloursBlock0.tone === "light" ||
@@ -493,17 +524,20 @@ function getMapartImageDataAndMaterials() {
                     canvasImageData.data[penultimateColoursBlock_index + 1],
                     canvasImageData.data[penultimateColoursBlock_index + 2],
                   ]);
+                  const lastBlockBlockedByWater = areSupportBlocksBlockedByWater(closestColourSetIdAndTone);
                   if (
                     // first under-support block
-                    closestColourSetIdAndTone.tone === "light" ||
-                    isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone) ||
-                    (closestColourSetIdAndTone.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(penultimateColoursBlock))
+                    !lastBlockBlockedByWater &&
+                    (closestColourSetIdAndTone.tone === "light" ||
+                      isSupportBlockMandatoryForColourSetIdAndTone(closestColourSetIdAndTone) ||
+                      (closestColourSetIdAndTone.tone === "normal" && isSupportBlockMandatoryForColourSetIdAndTone(penultimateColoursBlock)))
                   ) {
                     chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                     maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                   }
                   if (
                     // second under-support block
+                    !lastBlockBlockedByWater &&
                     closestColourSetIdAndTone.tone === "light" &&
                     isSupportBlockMandatoryForColourSetIdAndTone(penultimateColoursBlock)
                   ) {
@@ -527,6 +561,9 @@ function getMapartImageDataAndMaterials() {
                     canvasImageData.data[coloursBlock_index + 2],
                   ]);
                   const coloursBlock_south = closestColourSetIdAndTone;
+                  if (areSupportBlocksBlockedByWater(coloursBlock)) {
+                    break;
+                  }
                   if (
                     // first under-support block
                     coloursBlock.tone === "light" ||
@@ -565,23 +602,28 @@ function getMapartImageDataAndMaterials() {
                 }
                 case 127: {
                   // falls through
-                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
-                  maps[whichMap_y][whichMap_x].supportBlockCount += 1;
-                  if (closestColourSetIdAndTone.tone === "light") {
+                  if (!areSupportBlocksBlockedByWater(closestColourSetIdAndTone)) {
                     chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                     maps[whichMap_y][whichMap_x].supportBlockCount += 1;
+                    if (closestColourSetIdAndTone.tone === "light") {
+                      chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
+                      maps[whichMap_y][whichMap_x].supportBlockCount += 1;
+                    }
                   }
                 }
                 // eslint-disable-next-line no-fallthrough
                 default: {
-                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
-                  maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                   const coloursBlock_north_index = i - 4 * 128 * optionValue_mapSize_x;
                   const coloursBlock_north = exactRGBToColourSetIdAndTone([
                     canvasImageData.data[coloursBlock_north_index],
                     canvasImageData.data[coloursBlock_north_index + 1],
                     canvasImageData.data[coloursBlock_north_index + 2],
                   ]);
+                  if (areSupportBlocksBlockedByWater(coloursBlock_north)) {
+                    break;
+                  }
+                  chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
+                  maps[whichMap_y][whichMap_x].supportBlockCount += 1;
                   if (coloursBlock_north.tone === "light" || closestColourSetIdAndTone.tone === "dark") {
                     chunks[whichChunk_y][whichChunk_x].supportBlockCount += 1;
                     maps[whichMap_y][whichMap_x].supportBlockCount += 1;
@@ -595,8 +637,10 @@ function getMapartImageDataAndMaterials() {
               break;
             }
           }
-          chunks[whichChunk_y][whichChunk_x].materials[closestColourSetIdAndTone.colourSetId] += 1;
-          maps[whichMap_y][whichMap_x].materials[closestColourSetIdAndTone.colourSetId] += 1;
+          // water's shade comes from its depth, so the NBT stacks several waterlogged blocks for this pixel
+          const materialCount = closestColourSetIdAndTone.waterDepth !== undefined ? closestColourSetIdAndTone.waterDepth : 1;
+          chunks[whichChunk_y][whichChunk_x].materials[closestColourSetIdAndTone.colourSetId] += materialCount;
+          maps[whichMap_y][whichMap_x].materials[closestColourSetIdAndTone.colourSetId] += materialCount;
         }
       }
       if(canvasImageData.data[indexA] == 0  && selectedBlocks[alphaColorIdx] > -1) {

@@ -15,6 +15,22 @@ var exactColourCache = new Map(); // for mapping RGB that exactly matches in col
 
 var progressReportHead;
 let alphaColorIdx = 61;
+let waterColourSetId = 10;
+
+// Water's shade comes from how deep it is, not from the height of the block to its North:
+// 1 waterlogged block deep is light, 5 deep is normal, 10 deep is dark
+function getWaterDepthForTone(tone) {
+  switch (tone) {
+    case "light":
+      return 1;
+    case "normal":
+      return 5;
+    case "dark":
+      return 10;
+    default:
+      throw new Error("Unknown tone type");
+  }
+}
 
 /*
   A mapping from type names to NBT type numbers.
@@ -349,6 +365,15 @@ class Map_NBT {
   }
 
   getPhysicalLayout() {
+    // water columns hang below their top block; staircase modes with a fixed starting height get raised by this much so nothing goes below y = 0
+    this.waterDepthOffset = 0;
+    this.mapColoursLayout.forEach((column) =>
+      column.forEach((coloursLayoutBlock) => {
+        if (coloursLayoutBlock.colourSetId == waterColourSetId) {
+          this.waterDepthOffset = Math.max(this.waterDepthOffset, getWaterDepthForTone(coloursLayoutBlock.tone) - 1);
+        }
+      })
+    );
     for (let columnNumber = 0; columnNumber < this.mapColoursLayout.length; columnNumber++) {
       this.getPhysicalLayout_individualColumn(columnNumber);
       postMessage({
@@ -359,13 +384,21 @@ class Map_NBT {
   }
 
   getPhysicalLayout_individualColumn(columnNumber) {
-    const mapColoursLayoutColumn = this.mapColoursLayout[columnNumber];
+    // Since water's shade doesn't depend on the block to its North, as far as heights and support blocks are concerned
+    // a water pixel is a flat ("normal") block: its top is level with the block to its North (which is what the block
+    // to its South compares against) and the rest of the water column hangs straight down below it
+    const mapColoursLayoutColumn = this.mapColoursLayout[columnNumber].map((coloursLayoutBlock) =>
+      coloursLayoutBlock.colourSetId == waterColourSetId
+        ? { ...coloursLayoutBlock, tone: "normal", waterDepth: getWaterDepthForTone(coloursLayoutBlock.tone) }
+        : coloursLayoutBlock
+    );
     let physicalColumn = [];
+    const waterBlockPositions = new Set(); // "y,z" of every water block, so support blocks don't get placed inside water columns
     let currentHeight;
     switch (optionValue_staircasing) {
       case MapModes.SCHEMATIC_NBT.staircaseModes.OFF.uniqueId: {
         // start at y = 2 for flat maps; this covers the cases of support blocks 1 and or 2 blocks below
-        currentHeight = 2;
+        currentHeight = 2 + this.waterDepthOffset;
         break;
       }
       case MapModes.SCHEMATIC_NBT.staircaseModes.CLASSIC.uniqueId:
@@ -378,12 +411,12 @@ class Map_NBT {
       }
       case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_DARK.uniqueId: {
         // staircase descends from noobline southwards
-        currentHeight = 1 + mapColoursLayoutColumn.length;
+        currentHeight = 1 + mapColoursLayoutColumn.length + this.waterDepthOffset;
         break;
       }
       case MapModes.SCHEMATIC_NBT.staircaseModes.FULL_LIGHT.uniqueId: {
         // staircase ascends from noobline southwards
-        currentHeight = 1;
+        currentHeight = 1 + this.waterDepthOffset;
         break;
       }
       default: {
@@ -421,6 +454,15 @@ class Map_NBT {
       }
 
       physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight, rowNumber + 1, coloursLayoutBlock.colourSetId));
+      if (coloursLayoutBlock.waterDepth !== undefined) {
+        // rest of the water column, hanging below the top block
+        for (let depth = 0; depth < coloursLayoutBlock.waterDepth; depth++) {
+          if (depth !== 0) {
+            physicalColumn.push(this.returnPhysicalBlock(columnNumber, currentHeight - depth, rowNumber + 1, coloursLayoutBlock.colourSetId));
+          }
+          waterBlockPositions.add(`${currentHeight - depth},${rowNumber + 1}`);
+        }
+      }
       // the + 1 is because the noobline offsets everything South one block
       // read docs/supportBlocks.md to know how this works
       switch (optionValue_whereSupportBlocks) {
@@ -542,6 +584,15 @@ class Map_NBT {
       }
     }
 
+    // support blocks meant to go under a water block would land inside its water column; water doesn't need support so drop them
+    if (waterBlockPositions.size !== 0) {
+      physicalColumn = physicalColumn.filter(
+        (block) =>
+          this.palette_paletteId_colourSetId[block.state.value] !== "NOOBLINE_SCAFFOLD" ||
+          !waterBlockPositions.has(`${block.pos.value.value[1]},${block.pos.value.value[2]}`)
+      );
+    }
+
     // sort in terms of z and y, necessary for determining when a plateau has finished in valley mode, and correct noobline heights in map preview
     physicalColumn.sort((elt1, elt2) => {
       if (elt1.pos.value.value[2] < elt2.pos.value.value[2]) {
@@ -566,6 +617,7 @@ class Map_NBT {
         let ascending = false; // weakly ascending
         let currentPlateauStartIndex = null;
         let visibleBlocksHeight = physicalColumn[0].pos.value.value[1]; // initialise to noobline height
+        let visibleBlocksZ = physicalColumn[0].pos.value.value[2];
         // visible blocks are blocks at the top height in a x-z column, the actual map blocks that give the colours
 
         for (let i = 0; i < physicalColumn.length; i++) {
@@ -573,6 +625,11 @@ class Map_NBT {
           if (this.palette_paletteId_colourSetId[physicalBlock.state.value] === "NOOBLINE_SCAFFOLD") {
             continue;
           }
+          if (physicalBlock.pos.value.value[2] === visibleBlocksZ) {
+            // below the visible block at this z, eg the rest of a water column
+            continue;
+          }
+          visibleBlocksZ = physicalBlock.pos.value.value[2];
           if (ascending && physicalBlock.pos.value.value[1] < visibleBlocksHeight) {
             // dark after ascent; plateau found
             ascending = false;
@@ -600,8 +657,13 @@ class Map_NBT {
             physicalColumn[i].pos.value.value[1] -= pullDownHeight;
           }
           nonPlateauPulldownHeights[1] = pullDownHeight;
-          const plateauPulldownHeight = Math.min(...nonPlateauPulldownHeights);
+          let plateauPulldownHeight = Math.min(...nonPlateauPulldownHeights);
           // we pull down a plateau by the minimum of the two values the surrounding non-plateaus were pulled down by
+          // but never below y = 0, which a water column hanging under a plateau could otherwise cause.
+          // pulling a plateau down less than its neighbours only makes it relatively higher, so its light / dark edges keep their shading
+          for (let i = plateaus[0].startIndex; i < plateaus[0].endIndex; i++) {
+            plateauPulldownHeight = Math.min(physicalColumn[i].pos.value.value[1], plateauPulldownHeight);
+          }
           for (let i = plateaus[0].startIndex; i < plateaus[0].endIndex; i++) {
             physicalColumn[i].pos.value.value[1] -= plateauPulldownHeight;
           }
