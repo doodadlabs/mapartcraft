@@ -1,4 +1,4 @@
-// Add these to `nbt.jsworker` to create a schematic containing all valid blocks for a MC version.
+// Add these to `nbt.js` to create a schematic containing all valid blocks for a MC version.
 // This is mainly to test if blocks have changed between MC versions.
 // Watch out for redstone blocks and TNT being placed next to each other!
 

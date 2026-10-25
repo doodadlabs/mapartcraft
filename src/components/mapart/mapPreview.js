@@ -1,7 +1,6 @@
 import React, { Component, createRef } from "react";
 
 import Tooltip from "../tooltip";
-import MapCanvasWorker from "./workers/mapCanvas.jsworker"; // FINALLY got this to work; .js gets imported as code, anything else as URL
 
 import BackgroundColourModes from "./json/backgroundColourModes.json";
 import CropModes from "./json/cropModes.json";
@@ -14,6 +13,8 @@ import IMG_Textures from "../../images/textures.png";
 import IMG_GridOverlay from "../../images/gridOverlay.png";
 
 import "./mapPreview.css";
+
+const MapCanvasWorker = `${process.env.PUBLIC_URL}/workers/mapCanvas.js`;
 
 class MapPreview extends Component {
   state = {

@@ -7,9 +7,9 @@ import Tooltip from "../tooltip";
 import MapModes from "./json/mapModes.json";
 import WhereSupportBlocksModes from "./json/whereSupportBlocksModes.json";
 
-import NBTWorker from "./workers/nbt.jsworker";
-
 import "./greenButtons.css";
+
+const NBTWorker = `${process.env.PUBLIC_URL}/workers/nbt.js`;
 
 class GreenButtons extends Component {
   // For download buttons and donate link etc

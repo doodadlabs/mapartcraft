@@ -831,7 +831,7 @@ function setupExactColourCache() {
   // we do not care what staircasing option is selected etc as this does not matter
   // this is for exactly matching colours, whose values are never repeated in coloursJSON
   // also RGB could be easily changed to RGBA if Mojang ever added absolute black #000000 and we need to distinguish it from transparent
-  // setupExactColourCache also exists in mapCanvas.jsworker but without the "-1" colourSet for transparent
+  // setupExactColourCache also exists in mapCanvas.js but without the "-1" colourSet for transparent
   for (const [colourSetId, colourSet] of Object.entries(coloursJSON)) {
     for (const [toneKey, toneRGB] of Object.entries(colourSet.tonesRGB)) {
       const RGBBinary = (toneRGB[0] << 16) + (toneRGB[1] << 8) + toneRGB[2];

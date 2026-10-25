@@ -99,7 +99,7 @@ class ViewOnline2D extends Component {
             continue;
           } else {
             processedNoobline = true;
-            // since we ordered blocks by Z and Y in nbt.jsworker, the first block in the column is the highest block of the
+            // since we ordered blocks by Z and Y in nbt.js, the first block in the column is the highest block of the
             // noobline pillar (the correct height for the map preview)
           }
         } else {

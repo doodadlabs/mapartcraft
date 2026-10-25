@@ -27,7 +27,7 @@ let alphaColorIdx = 61;
 let waterColourSetId = 10;
 
 // Water's shade comes from how deep it is: 1 waterlogged block deep is light, 5 deep is normal, 10 deep is dark.
-// Keep in sync with getWaterDepthForTone in nbt.jsworker
+// Keep in sync with getWaterDepthForTone in nbt.js
 function getWaterDepthForTone(tone) {
   switch (tone) {
     case "light":
